@@ -1,0 +1,9 @@
+# label:color_rgb:parts:actions
+agriculture_land:255,255,0::
+background:97,35,35::
+barren_land:255,255,255::
+forest_land:0,255,0:: #green
+range_land:255,0,255::
+unknown:255,128,0::
+urban_land:0,255,255::
+water:0,0,255::

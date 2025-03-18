@@ -1,5 +1,5 @@
 data:
-  dir: Rachel_Tzuria/Data/Dataset/Small_test_dataset
+  dir: Rachel_Tzuria/Data/Dataset/Full_Dataset
   name: MiniFrance
 loss:
   eps: 1.0e-06
@@ -8,7 +8,7 @@ loss:
   smoothing_factor: 0.1
   log_loss: true
   mode: multiclass
-  name: CrossEntropyLoss
+  name: JaccardFocalLoss
   smooth: 0.1
 model: 
   activation: softmax

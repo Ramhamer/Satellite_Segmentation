@@ -995,7 +995,7 @@ def select_loss(cfg,criterion_name,data_dir,loss_mode,desirable_class,log_loss,f
     """
     
     if criterion_name == "DiceLoss":
-        criterion = smp.losses.DiceLoss(loss_mode,list(range(desirable_class)),log_loss,from_logits,smooth,ignore_index,eps)            
+        new_criterion = smp.losses.DiceLoss(loss_mode,list(range(desirable_class)),log_loss,from_logits,smooth,ignore_index,eps)            
 
     if criterion_name == "CrossEntropyLoss":
         train_distribution = calculate_class_distribution(cfg,train_loader.dataset)
@@ -1008,12 +1008,12 @@ def select_loss(cfg,criterion_name,data_dir,loss_mode,desirable_class,log_loss,f
     if criterion_name == "FocalLoss":
         criterion = smp.losses.FocalLoss(loss_mode,ignore_index)
     
-    if criterion_name == "DiceCrossEntropy":
+    if criterion_name == "DiceCrossEntropyLoss":
         train_distribution = calculate_class_distribution(cfg, train_loader.dataset)
         class_weights = calculate_class_weights(train_distribution)
         criterion = DiceCrossEntropyLoss(loss_mode, weight=class_weights, dice_weight=0.5, ce_weight=0.5, log_loss=log_loss, from_logits=from_logits, smooth=smooth, ignore_index=ignore_index, eps=eps)
 
-    if criterion_name == "JaccardFocal":
+    if criterion_name == "JaccardFocalLoss":
         criterion = JaccardFocalLoss(loss_mode, jaccard_weight=0.5, focal_weight=0.5, ignore_index=ignore_index, eps=eps)
 
     return criterion
@@ -1036,19 +1036,18 @@ def build_epoch_dir(epoch_dir):
         """"
         Create a directory for the current epoch to save model checkpoints and samples."
         """
-        
         os.makedirs(epoch_dir, exist_ok=True)
         os.makedirs(os.path.join(epoch_dir,"sampels"), exist_ok=True)
         os.makedirs(os.path.join(epoch_dir,"sampels","pred_samples"), exist_ok=True)
         os.makedirs(os.path.join(epoch_dir,"sampels","gt_samples"), exist_ok=True)
-
         return
 
-
-def save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class):
+def save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg):
 
     # Calculate the confusion matrix
     cm = confusion_matrix(y_true, y_pred)
+    # noemalized by column (how accurate the prediction for each class are)
+    normalized_cm = cm.astype('float') / cm.sum(axis=0, keepdims=True)
 
     # Get unique classes and sort them
     classes = []
@@ -1058,9 +1057,19 @@ def save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class):
     # Generate labels based on unique classes
     class_labels = [f'Class {c}' for c in classes]
 
+    # Change labels into class names
+    if cfg['data']['name'] == 'MiniFrance':
+        label_map = {
+            'Class 0': 'Landscape',
+            'Class 1': 'Urban area',
+            'Class 2': 'Forest',
+            'Class 3': 'Unknown',
+        }
+        class_labels = [label_map[label] for label in class_labels]
+
     # Create the heatmap with dynamic labels
     plt.figure(figsize=(10, 8))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
+    sns.heatmap(normalized_cm, annot=True, fmt='g', cmap='Blues', 
                 xticklabels=class_labels,
                 yticklabels=class_labels)
     plt.xlabel('Predicted')
@@ -1073,11 +1082,23 @@ def save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class):
 
 def save_image_samples(images,masks,outputs,epoch_dir):
 
+    mean = np.array([0.5, 0.5, 0.5])  # Change to your dataset's mean
+    std = np.array([0.5, 0.5, 0.5])   # Change to your dataset's std
+
+# Convert tensor to NumPy and undo normalization
+
     pred_dir = os.path.join(epoch_dir,"sampels","pred_samples")
     gt_dir = os.path.join(epoch_dir,"sampels","gt_samples")
     index = 0
     for image, mask, output in zip(images, masks, outputs):
-        image = (image.cpu().numpy()).transpose(1, 2, 0)
+        image = image.cpu().permute(1, 2, 0).numpy()
+        
+        # Scale to [0, 1] range
+        min_val = image.min()
+        max_val = image.max()
+        if max_val > min_val:  # Avoid division by zero
+            image = (image - min_val) / (max_val - min_val)
+        image = (image * 255).astype(np.uint8)
         output = (torch.argmax(output, dim=0))
         i_pred_dir = os.path.join(pred_dir,f"image_{index}.png")
         i_gt_dir = os.path.join(gt_dir,f"image_{index}.png")

@@ -13,7 +13,6 @@ from utils.train_utlis import *
 from inference import *
 
 
-
 if __name__ == "__main__":
     # define the device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -41,7 +40,7 @@ if __name__ == "__main__":
                     cfg = update_cfg(cfg)  
 
                 # Start the train
-                checkpoints_dir = train(cfg)                                                          # Start the train
+                checkpoints_dir = train(cfg,device)                                                          # Start the train
                 print(f"{Fore.GREEN}Training has been completed successfully.{Fore.RESET}\n{Fore.RED}Starting to evaluate the model..{Fore.RESET}")
                 test_evaluation(checkpoints_dir,cfg)                                # evaluate the model weights by graphs parameters
                 print(f"{Fore.GREEN}Evaluation has been completed successfully.{Fore.RESET}")

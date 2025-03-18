@@ -91,6 +91,7 @@ def inference(cfg,weight_path,image_path,device):
     # 1. Segmented image
     if image_mode == "1":
         segmented_image(pred_tensor,image,image_path)
+        print(f"{Fore.GREEN}The prediction has been completed successfully. \nYou can find the prediction in the image path.{Fore.RESET}\n")
 
     #2. Image mask
     if image_mode == "2":
@@ -107,6 +108,6 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     yaml_file = '/workspace/config.yaml'
     cfg = load_yaml(yaml_file)
-    image_path = '/workspace/results/946475_sat.png'
-    weight_path = '/workspace/results/DeepLabV3Plus_Jan-16-2025_17:08/checkpoints/DeepLabV3Plus_epoch_110.pth'
+    image_path = 'Rachel_Tzuria/Data/test_images/g/Focal+Jaccard/35-2012-0360-6840-LA93-0M50-E080.png'
+    weight_path = 'results/DeepLabV3Plus_Mar-18-2025_08:55/checkpoints/DeepLabV3Plus_best.pth'
     inference(cfg,weight_path,image_path,device)

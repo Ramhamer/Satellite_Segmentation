@@ -193,7 +193,7 @@ def update_cfg(config):
 
     # Ask the user for a Weight Decay value
     while True:
-        new_weight_decay = input(f"{Fore.CYAN}Weight Decay value:{Fore.RESET} \n1. 0.0001 \n2. 0.00001 {Fore.YELLOW}(Default){Fore.RESET} \n3. 0.000001 \n")
+        new_weight_decay = input(f"{Fore.CYAN}Weight Decay value:{Fore.RESET} \n1. 0.0001 \n2. 0.00001 \n3. 0.000001 \n4. 0.04 {Fore.YELLOW}(Default){Fore.RESET} \n")
         if new_weight_decay == "1":
             config['train']['weight_decay'] = 0.001
             break
@@ -202,6 +202,9 @@ def update_cfg(config):
             break
         if new_weight_decay == "3":
             config['train']['weight_decay'] = 0.00001
+            break
+        if new_weight_decay == "4":
+            config['train']['weight_decay'] = 0.04
             break
         else:
             print(f"{Fore.RED}Invalid input.{Fore.RESET}")

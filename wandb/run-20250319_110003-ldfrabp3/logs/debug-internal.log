@@ -1,0 +1,7 @@
+{"time":"2025-03-19T11:00:03.594595516Z","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/workspace/wandb/run-20250319_110003-ldfrabp3/logs/debug-core.log"}
+{"time":"2025-03-19T11:00:03.704720112Z","level":"INFO","msg":"created new stream","id":"ldfrabp3"}
+{"time":"2025-03-19T11:00:03.704812382Z","level":"INFO","msg":"stream: started","id":"ldfrabp3"}
+{"time":"2025-03-19T11:00:03.704897078Z","level":"INFO","msg":"writer: Do: started","stream_id":"ldfrabp3"}
+{"time":"2025-03-19T11:00:03.70491732Z","level":"INFO","msg":"handler: started","stream_id":"ldfrabp3"}
+{"time":"2025-03-19T11:00:03.705026782Z","level":"INFO","msg":"sender: started","stream_id":"ldfrabp3"}
+{"time":"2025-03-19T11:00:04.272735751Z","level":"INFO","msg":"Starting system monitor"}

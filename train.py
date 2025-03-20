@@ -9,10 +9,16 @@ from colorama import Fore, Style, init
 from utils.data_utils import train_dir, create_metadata, load_data
 from utils.train_utlis import *
 from utils.cfg_utils import load_yaml
-
+import wandb
+from utils.wandb_utils import *
+import datetime
 torch.backends.cudnn.enabled = False
 os.environ['CUDA_LAUNCH_BLOCKING']="1"
 os.environ['TORCH_USE_CUDA_DSA'] = "1"  
+
+# Add two hours to the current time automatically
+new_time = datetime.datetime.now() + datetime.timedelta(hours=2)
+time = new_time.strftime("%m_%d-%H_%M")
 
 
 
@@ -52,7 +58,18 @@ def train(cfg, device): #Pull all the vars from the config file
     prev_weights = cfg['model']['prev_weights']
     interval_save_epoch = cfg['train']['interval_save_epoch']
 
+    #project name
+    project_name = cfg['project']['name']
+    run_name = cfg['project']['run_name']
 ####################################################################################
+    
+
+    if run_name == "None":
+        run_name = time
+
+    #initlize the wandb run
+    wandb_init(project_name,run_name)
+   
 
     # Create a directory for the train
     save_dir = train_dir(model_name)
@@ -86,6 +103,7 @@ def train(cfg, device): #Pull all the vars from the config file
     val_acc = 0
     best_epoch = 0
     model.to(device)
+    wandb.watch(model, log="all") 
     bar_format = "{l_bar}%s{bar}%s{r_bar}" % (Fore.BLUE, Fore.RESET)
     bar_format1 = "{l_bar}%s{bar}%s{r_bar}" % (Fore.GREEN, Fore.RESET)
     with tqdm(total=num_epochs, desc="Training Progress",ncols=150, unit='epoch',bar_format=bar_format) as epoch_bar:
@@ -99,7 +117,7 @@ def train(cfg, device): #Pull all the vars from the config file
                 acc_train= 0 
                 batch_loss = 0.0
                 for batch_idx, batch in enumerate(train_loader):
-                    images, masks = batch
+                    images, masks,_= batch
                     # to device
                     images, masks = images.to(device), masks.to(device)
                     
@@ -143,7 +161,7 @@ def train(cfg, device): #Pull all the vars from the config file
             with torch.no_grad():
 
                 for batch_idx, batch in enumerate(val_loader):
-                    images, masks = batch
+                    images, masks , filenames = batch
                     images, masks = images.to(device), masks.to(device)
                     
                     # Forward pass
@@ -168,10 +186,13 @@ def train(cfg, device): #Pull all the vars from the config file
 
                     # Save images samples
                     if batch_idx == random_batch_idx:
-                        save_image_samples(images,masks,outputs,epoch_dir)
+                        # save_image_samples(images,masks,outputs,epoch_dir)
+                        wandb_visualization_table(images,masks,outputs,epoch,filenames)
 
-                # Save confusion matrix
-                save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class)
+            # # Save confusion matrix
+            cm = save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class)
+        
+
 
             val_losses.append(val_loss)
             val_accuracies.append(val_acc)
@@ -181,6 +202,11 @@ def train(cfg, device): #Pull all the vars from the config file
             print("\naccuracy train:" ,epoch_acc , "loss train:" ,epoch_loss , "\n" "accuracy val:" , val_acc," loss val:",val_loss)
             epoch_bar.update()
             
+
+            # log the metrics
+            wandb_learning_curves(epoch,train_accuracies,val_accuracies,train_losses,val_losses)
+         
+
             #plot curves
             update_learning_curves(train_accuracies, val_accuracies, train_losses,val_losses ,num_epochs,epoch ,model_name,save_dir)            
             
@@ -206,6 +232,9 @@ def train(cfg, device): #Pull all the vars from the config file
     # Save the best model in the Metadata
     with open(os.path.join(save_dir, 'metadata.txt'), 'a') as file:
         file.write(f"\nThe best accuracy is: {best_acc} in epoch: {best_epoch}\n")
+
+    #save the wandb
+    wandb.finish()
 
     return checkpoints_dir
 

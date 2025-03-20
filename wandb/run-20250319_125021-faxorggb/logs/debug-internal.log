@@ -1,0 +1,7 @@
+{"time":"2025-03-19T12:50:21.842238647Z","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/workspace/wandb/run-20250319_125021-faxorggb/logs/debug-core.log"}
+{"time":"2025-03-19T12:50:21.953457527Z","level":"INFO","msg":"created new stream","id":"faxorggb"}
+{"time":"2025-03-19T12:50:21.953556726Z","level":"INFO","msg":"stream: started","id":"faxorggb"}
+{"time":"2025-03-19T12:50:21.953567643Z","level":"INFO","msg":"writer: Do: started","stream_id":"faxorggb"}
+{"time":"2025-03-19T12:50:21.953583336Z","level":"INFO","msg":"sender: started","stream_id":"faxorggb"}
+{"time":"2025-03-19T12:50:21.95365531Z","level":"INFO","msg":"handler: started","stream_id":"faxorggb"}
+{"time":"2025-03-19T12:50:22.555548367Z","level":"INFO","msg":"Starting system monitor"}

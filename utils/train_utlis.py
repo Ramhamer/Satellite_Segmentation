@@ -1,4 +1,5 @@
 import torch
+import wandb
 import cv2
 import numpy as np
 from torch.utils.data import DataLoader
@@ -1055,6 +1056,7 @@ def save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class):
     for i in range(desirable_class):
         classes.append(i)
 
+    
     # Generate labels based on unique classes
     class_labels = [f'Class {c}' for c in classes]
 
@@ -1067,9 +1069,11 @@ def save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class):
     plt.ylabel('True')
     plt.title('Confusion Matrix')
     plt.savefig(os.path.join(epoch_dir,'confusion_matrix.png'))
+
+    wandb.log({"Normalized Confusion Matrix": wandb.Image(plt)})
     plt.close()  # Close the figure to prevent display
     
-    return
+    return cm
 
 def save_image_samples(images,masks,outputs,epoch_dir):
 

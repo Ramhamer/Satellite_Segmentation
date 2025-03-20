@@ -106,7 +106,16 @@ def class_reduction(mask,new_class):
     mask = Image.fromarray(mask)
     return mask
 
+def class_label(data_name=data_name):
+    """
+    retuen the class label of the data set
+    """
+    if data_name == "MiniFrance":
+        class_labels = {0: "Unknown", 1: "Urban", 2: "Forest", 3: "Barren Land"}
 
+
+    return class_labels
+    
 def one_hot(masks,desirable_class):
     """
     Converts a segmentation mask with class labels into a one-hot encoded tensor with a specified number of classes.

@@ -1,0 +1,4 @@
+Processing Masks distribution for class weights:: 100%|████████████████████████████| 678/678 [00:10<00:00, 63.65it/s]
+[31mPrevious Model weights not loaded[39m
+batch Progress:   0%|[32m                                                     [39m| 0/170 [00:02<?, ?iter/s][0m                [39m| 0/4 [00:00<?, ?epoch/s][0m
+Training Progress:   0%|[34m                                                                                                     [39m| 0/4 [00:02<?, ?epoch/s][0m

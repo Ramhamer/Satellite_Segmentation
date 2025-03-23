@@ -1,0 +1,7 @@
+{"time":"2025-03-19T13:07:06.86695337Z","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/workspace/wandb/run-20250319_130706-v58vpufg/logs/debug-core.log"}
+{"time":"2025-03-19T13:07:06.978858835Z","level":"INFO","msg":"created new stream","id":"v58vpufg"}
+{"time":"2025-03-19T13:07:06.97896473Z","level":"INFO","msg":"stream: started","id":"v58vpufg"}
+{"time":"2025-03-19T13:07:06.979026718Z","level":"INFO","msg":"writer: Do: started","stream_id":"v58vpufg"}
+{"time":"2025-03-19T13:07:06.979046822Z","level":"INFO","msg":"sender: started","stream_id":"v58vpufg"}
+{"time":"2025-03-19T13:07:06.97910094Z","level":"INFO","msg":"handler: started","stream_id":"v58vpufg"}
+{"time":"2025-03-19T13:07:07.648724532Z","level":"INFO","msg":"Starting system monitor"}

@@ -1,4 +1,5 @@
 import torch
+import wandb
 import cv2
 import numpy as np
 from torch.utils.data import DataLoader
@@ -50,6 +51,33 @@ def get_accuracy(predictions,masks):
         accuracy = (preds == masks).float().mean().item()
         
     return accuracy
+
+def iou_score(outputs, masks):
+    """
+    Calculate the mean Intersection over Union (IoU) for multi-class segmentation.
+
+    Args:
+        outputs (torch.Tensor): The model predictions (N, C, H, W) or (N, H, W).
+        masks (torch.Tensor): The ground truth segmentation masks (N, H, W).
+
+    Returns:
+        float: The mean IoU across all classes.
+    """
+    #check unique values
+    desirable_class =  np.union1d(np.unique(masks), np.unique(outputs))
+    ious = []
+    for cls in list(desirable_class):
+        pred_cls = (outputs == cls)  # Predicted mask for class `cls`
+        mask_cls = (masks == cls)    # Ground truth mask for class `cls`
+        intersection = np.logical_and(pred_cls, mask_cls).sum().astype(float)
+
+        union = np.logical_or(pred_cls, mask_cls).sum().astype(float)
+
+
+        iou = intersection / union if union > 0 else 0.0
+        ious.append(iou)
+
+    return np.mean(ious)
 
 
 def get_class_one_accuracy(predictions,masks,num_cls):
@@ -1056,6 +1084,7 @@ def save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg):
     for i in range(desirable_class):
         classes.append(i)
 
+    
     # Generate labels based on unique classes
     class_labels = [f'Class {c}' for c in classes]
 
@@ -1078,9 +1107,11 @@ def save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg):
     plt.ylabel('True')
     plt.title('Confusion Matrix')
     plt.savefig(os.path.join(epoch_dir,'confusion_matrix.png'))
+
+    wandb.log({"Normalized Confusion Matrix": wandb.Image(plt)})
     plt.close()  # Close the figure to prevent display
     
-    return
+    return cm
 
 def save_image_samples(images,masks,outputs,epoch_dir):
 

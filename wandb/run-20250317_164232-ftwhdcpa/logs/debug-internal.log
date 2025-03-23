@@ -1,0 +1,7 @@
+{"time":"2025-03-17T16:42:32.397964186Z","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/workspace/wandb/run-20250317_164232-ftwhdcpa/logs/debug-core.log"}
+{"time":"2025-03-17T16:42:32.511774626Z","level":"INFO","msg":"created new stream","id":"ftwhdcpa"}
+{"time":"2025-03-17T16:42:32.511887114Z","level":"INFO","msg":"stream: started","id":"ftwhdcpa"}
+{"time":"2025-03-17T16:42:32.511933854Z","level":"INFO","msg":"handler: started","stream_id":"ftwhdcpa"}
+{"time":"2025-03-17T16:42:32.512051151Z","level":"INFO","msg":"writer: Do: started","stream_id":"ftwhdcpa"}
+{"time":"2025-03-17T16:42:32.512050535Z","level":"INFO","msg":"sender: started","stream_id":"ftwhdcpa"}
+{"time":"2025-03-17T16:42:33.026587483Z","level":"INFO","msg":"Starting system monitor"}

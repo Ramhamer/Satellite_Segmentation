@@ -1,0 +1,32 @@
+Processing Masks distribution for class weights:: 100%|████████████████████████████| 678/678 [00:10<00:00, 63.75it/s]
+[31mPrevious Model weights not loaded[39m
+Training Progress:   0%|[34m                                                                                     /usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py:1518: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return self._call_impl(*args, **kwargs)                                      [39m| 0/170 [00:00<?, ?iter/s][0m
+batch Progress: 100%|[32m███████████████████████████████████████████[39m| 170/170 [00:58<00:00,  2.91iter/s][0m
+Training Progress:   0%|[34m                                                                                                     [39m| 0/4 [01:13<?, ?epoch/s][0m
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/root/.vscode-server/extensions/ms-python.debugpy-2025.4.1-linux-x64/bundled/libs/debugpy/adapter/../../debugpy/launcher/../../debugpy/__main__.py", line 71, in <module>
+    cli.main()
+  File "/root/.vscode-server/extensions/ms-python.debugpy-2025.4.1-linux-x64/bundled/libs/debugpy/adapter/../../debugpy/launcher/../../debugpy/../debugpy/server/cli.py", line 501, in main
+    run()
+  File "/root/.vscode-server/extensions/ms-python.debugpy-2025.4.1-linux-x64/bundled/libs/debugpy/adapter/../../debugpy/launcher/../../debugpy/../debugpy/server/cli.py", line 351, in run_file
+    runpy.run_path(target, run_name="__main__")
+  File "/root/.vscode-server/extensions/ms-python.debugpy-2025.4.1-linux-x64/bundled/libs/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 310, in run_path
+    return _run_module_code(code, init_globals, run_name, pkg_name=pkg_name, script_name=fname)
+  File "/root/.vscode-server/extensions/ms-python.debugpy-2025.4.1-linux-x64/bundled/libs/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 127, in _run_module_code
+    _run_code(code, mod_globals, init_globals, mod_name, mod_spec, pkg_name, script_name)
+  File "/root/.vscode-server/extensions/ms-python.debugpy-2025.4.1-linux-x64/bundled/libs/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 118, in _run_code
+    exec(code, run_globals)
+  File "/workspace/train.py", line 245, in <module>
+    train(cfg,device)
+  File "/workspace/train.py", line 190, in train
+    wandb_visualization_table(images,masks,outputs,epoch,desirable_class)
+  File "/workspace/utils/wandb_utils.py", line 72, in wandb_visualization_table
+    table.add_data(id, mask_img)
+  File "/usr/local/lib/python3.10/dist-packages/wandb/sdk/data_types/table.py", line 429, in add_data
+    raise ValueError(
+ValueError: This table expects 5 columns: ['ID', 'Images', 'Predictions', 'Ground Truth', 'iou'], found 2

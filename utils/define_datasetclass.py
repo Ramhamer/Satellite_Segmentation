@@ -75,7 +75,7 @@ class SegmentationDataset(Dataset):
         image,transforms_list = transform_image(image,self.transform)
         mask = transform_mask(mask,transforms_list)
         
-        return image, mask
+        return image, mask,self.image_names[idx]
     
 
 

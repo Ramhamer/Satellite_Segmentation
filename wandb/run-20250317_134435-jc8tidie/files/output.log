@@ -1,0 +1,33 @@
+Processing Masks distribution for class weights:: 100%|████████████████████████████| 678/678 [00:09<00:00, 69.46it/s]
+[31mPrevious Model weights not loaded[39m
+Training Progress:   0%|[34m                                                                                     /usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py:1518: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return self._call_impl(*args, **kwargs)                                      [39m| 0/170 [00:00<?, ?iter/s][0m
+batch Progress: 100%|[32m███████████████████████████████████████████[39m| 170/170 [00:55<00:00,  3.06iter/s][0m
+Training Progress:  33%|[34m███████████████████████████████                                                              [39m| 1/3 [01:16<02:32, 76.42s/epoch][0m/workspace/utils/train_utlis.py:462: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+
+accuracy train: 0.42014777484544963 loss train: 1.304793687696654
+accuracy val: 0.44633426776541485  loss val: 1.202863706366081
+  plt.pause(0.1)
+/workspace/utils/train_utlis.py:463: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+                                                                                                                  /usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py:1518: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return self._call_impl(*args, **kwargs)                                      [39m| 0/170 [00:00<?, ?iter/s][0m
+batch Progress: 100%|[32m███████████████████████████████████████████[39m| 170/170 [00:55<00:00,  3.04iter/s][0m
+Training Progress:  67%|[34m█████████████████████████████████████████████████████████████▎                              [39m| 2/3 [03:16<01:42, 102.23s/epoch][0m/workspace/utils/train_utlis.py:462: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+
+accuracy train: 0.45158923551396285 loss train: 1.2339254332854686
+accuracy val: 0.4048767596614518  loss val: 1.2671125791146367
+  plt.pause(0.1)
+/workspace/utils/train_utlis.py:463: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+                                                                                                                  /usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py:1518: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return self._call_impl(*args, **kwargs)                                      [39m| 0/170 [00:00<?, ?iter/s][0m
+batch Progress: 100%|[32m███████████████████████████████████████████[39m| 170/170 [00:56<00:00,  3.00iter/s][0m
+Training Progress: 100%|[34m█████████████████████████████████████████████████████████████████████████████████████████████[39m| 3/3 [04:33<00:00, 90.81s/epoch][0m/workspace/utils/train_utlis.py:462: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+
+accuracy train: 0.4528771347000887 loss train: 1.221341949296912
+accuracy val: 0.42861019265284095  loss val: 1.218289785973301
+  plt.pause(0.1)
+/workspace/utils/train_utlis.py:463: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+Training Progress: 100%|[34m█████████████████████████████████████████████████████████████████████████████████████████████[39m| 3/3 [04:34<00:00, 91.49s/epoch][0m

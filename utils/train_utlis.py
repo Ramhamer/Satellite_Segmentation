@@ -52,6 +52,33 @@ def get_accuracy(predictions,masks):
         
     return accuracy
 
+def iou_score(outputs, masks):
+    """
+    Calculate the mean Intersection over Union (IoU) for multi-class segmentation.
+
+    Args:
+        outputs (torch.Tensor): The model predictions (N, C, H, W) or (N, H, W).
+        masks (torch.Tensor): The ground truth segmentation masks (N, H, W).
+
+    Returns:
+        float: The mean IoU across all classes.
+    """
+    #check unique values
+    desirable_class =  np.union1d(np.unique(masks), np.unique(outputs))
+    ious = []
+    for cls in list(desirable_class):
+        pred_cls = (outputs == cls)  # Predicted mask for class `cls`
+        mask_cls = (masks == cls)    # Ground truth mask for class `cls`
+        intersection = np.logical_and(pred_cls, mask_cls).sum().astype(float)
+
+        union = np.logical_or(pred_cls, mask_cls).sum().astype(float)
+
+
+        iou = intersection / union if union > 0 else 0.0
+        ious.append(iou)
+
+    return np.mean(ious)
+
 
 def get_class_one_accuracy(predictions,masks,num_cls):
     """

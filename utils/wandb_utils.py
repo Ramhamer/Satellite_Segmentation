@@ -1,6 +1,7 @@
 import wandb
 import torch
 from utils.image_utils import class_label
+from utils.train_utlis import iou_score
 
 
 
@@ -72,7 +73,7 @@ def wandb_visualization_table(images,masks,predicition,epoch,filenames):
         image = wandb.Image(img)    
         pred_mask = wandb.Image(img,masks={"predictions": {"mask_data": predicition, "class_labels": class_dict}})
         gt_mask = wandb.Image(img,masks={"ground_truth": {"mask_data": mask, "class_labels": class_dict}})
-        iou ="remember to add the iou"
+        iou = iou_score(predicition, mask)
 
         table.add_data(filenames[id], image, pred_mask, gt_mask,iou)
 

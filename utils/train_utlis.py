@@ -1108,7 +1108,6 @@ def save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg):
     plt.title('Confusion Matrix')
     plt.savefig(os.path.join(epoch_dir,'confusion_matrix.png'))
 
-    wandb.log({"Normalized Confusion Matrix": wandb.Image(plt)})
     plt.close()  # Close the figure to prevent display
     
     return cm

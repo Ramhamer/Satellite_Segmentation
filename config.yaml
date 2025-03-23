@@ -3,11 +3,8 @@ project :
   run_name: None
 
 data:
-<<<<<<< HEAD
   dir: Rachel_Tzuria/Data/Dataset/Debug_dataset
-=======
   dir: /Data/Data/Debug_dataset
->>>>>>> origin/dan_branch
   name: MiniFrance
 loss:
   eps: 1.0e-06

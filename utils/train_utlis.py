@@ -1028,8 +1028,7 @@ def segmented_image(pred_tensor,image,pred_image_path):
     '''
     rgb_mask = grey_to_rgb_mask(pred_tensor)         
     output = add_mask(image,rgb_mask)
-    pred_image = Image.fromarray(output)
-    pred_image.save(pred_image_path)
+
     return
 
 def build_epoch_dir(epoch_dir):
@@ -1041,6 +1040,9 @@ def build_epoch_dir(epoch_dir):
         os.makedirs(os.path.join(epoch_dir,"sampels","pred_samples"), exist_ok=True)
         os.makedirs(os.path.join(epoch_dir,"sampels","gt_samples"), exist_ok=True)
         return
+
+
+
 
 def save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg):
 
@@ -1103,9 +1105,12 @@ def save_image_samples(images,masks,outputs,epoch_dir):
         i_pred_dir = os.path.join(pred_dir,f"image_{index}.png")
         i_gt_dir = os.path.join(gt_dir,f"image_{index}.png")
 
-        segmented_image(output.unsqueeze(0),image,i_pred_dir)
-        segmented_image(mask,image,i_gt_dir)
+        pred_segmented_image = segmented_image(output.unsqueeze(0),image,i_pred_dir)
+        gt_segmented_image = segmented_image(mask,image,i_gt_dir)
         
+
+        # pred_image = Image.fromarray(output)
+        # pred_image.save(pred_image_path)
         index += 1
     return
     

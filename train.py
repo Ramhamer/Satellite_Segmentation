@@ -14,7 +14,8 @@ torch.backends.cudnn.enabled = False
 os.environ['CUDA_LAUNCH_BLOCKING']="1"
 os.environ['TORCH_USE_CUDA_DSA'] = "1"  
 
-
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
 def train(cfg, device): #Pull all the vars from the config file
     #cfg
@@ -99,6 +100,8 @@ def train(cfg, device): #Pull all the vars from the config file
                 acc_train= 0 
                 batch_loss = 0.0
                 for batch_idx, batch in enumerate(train_loader):
+                    if batch_idx == 20:
+                        break
                     images, masks = batch
                     # to device
                     images, masks = images.to(device), masks.to(device)
@@ -140,9 +143,12 @@ def train(cfg, device): #Pull all the vars from the config file
 
 
             # Validation step
+            torch.cuda.empty_cache()
+
+            cm = np.zeros((desirable_class,desirable_class))
             with torch.no_grad():
 
-                for batch_idx, batch in enumerate(val_loader):
+                for batch_idx, batch in enumerate(tqdm(val_loader)):
                     images, masks = batch
                     images, masks = images.to(device), masks.to(device)
                     
@@ -150,15 +156,11 @@ def train(cfg, device): #Pull all the vars from the config file
                     outputs = model(images)[0]
                     loss_masks = masks.squeeze(1).long()
 
-                    if batch_idx == 0:
-                        y_pred = torch.argmax(outputs,dim=1).cpu().numpy().flatten()
-                        y_true = masks.cpu().numpy().flatten()
                     
-                    else:    
-                        #accomlate the y_pred and y_true
-                        y_pred = np.hstack([y_pred,torch.argmax(outputs,dim=1).cpu().numpy().flatten()])
-                        y_true = np.hstack([y_true , masks.cpu().numpy().flatten()])
-        
+                    y_pred = torch.argmax(outputs,dim=1).cpu().numpy().flatten()
+                    y_true = masks.cpu().numpy().flatten()
+                
+                 
                     # Calculate accuracy and loss of the validation
                     loss = criterion(outputs, loss_masks)
                     loss_val += loss.item() * images.size(0)
@@ -167,11 +169,12 @@ def train(cfg, device): #Pull all the vars from the config file
                     val_acc = acc_val/len(val_loader.dataset)
 
                     # Save images samples
-                    if batch_idx == random_batch_idx:
+                    # if batch_idx == random_batch_idx:
+                    if batch_idx == 1:
                         save_image_samples(images,masks,outputs,epoch_dir)
 
-                # Save confusion matrix
-                save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg)
+                    cm += confusion_matrix(y_true,y_pred) 
+                    # save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg)
 
             val_losses.append(val_loss)
             val_accuracies.append(val_acc)

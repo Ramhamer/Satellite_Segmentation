@@ -1,7 +1,0 @@
-{"time":"2025-03-23T09:32:35.40398802Z","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/workspace/wandb/run-20250323_093235-tizvs5vg/logs/debug-core.log"}
-{"time":"2025-03-23T09:32:35.51555025Z","level":"INFO","msg":"created new stream","id":"tizvs5vg"}
-{"time":"2025-03-23T09:32:35.515652231Z","level":"INFO","msg":"stream: started","id":"tizvs5vg"}
-{"time":"2025-03-23T09:32:35.515649914Z","level":"INFO","msg":"writer: Do: started","stream_id":"tizvs5vg"}
-{"time":"2025-03-23T09:32:35.515726395Z","level":"INFO","msg":"sender: started","stream_id":"tizvs5vg"}
-{"time":"2025-03-23T09:32:35.515784392Z","level":"INFO","msg":"handler: started","stream_id":"tizvs5vg"}
-{"time":"2025-03-23T09:32:36.078494659Z","level":"INFO","msg":"Starting system monitor"}

@@ -1,9 +1,0 @@
-Processing Masks distribution for class weights:: 100%|████████████████████████████| 678/678 [00:10<00:00, 62.83it/s]
-[31mPrevious Model weights not loaded[39m
-Training Progress:   0%|[34m                                                                                     /usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py:1518: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
-  return self._call_impl(*args, **kwargs)                                      [39m| 0/170 [00:00<?, ?iter/s][0m
-batch Progress: 100%|[32m███████████████████████████████████████████[39m| 170/170 [00:58<00:00,  2.90iter/s][0m
-Training Progress:  25%|[34m███████████████████████▎                                                                     [39m| 1/4 [01:21<04:03, 81.00s/epoch][0m
-
-accuracy train: 0.41538184511978016 loss train: 1.289319999450076
-accuracy val: 0.44299450858048933  loss val: 1.1939472479967295

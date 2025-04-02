@@ -3,7 +3,7 @@ project :
   run_name: None
 
 data:
-  dir: /Data/Data/Debug_dataset
+  dir: origin_data/1024_crop
   name: MiniFrance
 loss:
   eps: 1.0e-06
@@ -12,7 +12,7 @@ loss:
   smoothing_factor: 0.1
   log_loss: true
   mode: multiclass
-  name: CrossEntropyLoss
+  name: JaccardFocal
   smooth: 0.1
 model: 
   activation: softmax

@@ -121,6 +121,9 @@ def train(cfg, device): #Pull all the vars from the config file
                     # to device
                     images, masks = images.to(device), masks.to(device)
                     
+                    if 0 in np.unique(masks.cpu().numpy()):
+                        print(f"{Fore.RED}Class 0 found in the mask{Fore.RESET}")
+                    
                     # Validity check             
                     # compare(images,masks)
                     

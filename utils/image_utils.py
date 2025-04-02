@@ -33,7 +33,7 @@ def crop_image(image):
     image = image.crop((left, top, right, bottom))
     return image 
 
-def add_mask(original_image,mask,alpha=0.15):
+def add_mask(original_image,mask,alpha=0.25):
     """
     Overlays a color-encoded mask on an original image by blending the two, with padding if necessary.
 
@@ -47,6 +47,9 @@ def add_mask(original_image,mask,alpha=0.15):
                     The image is returned as a NumPy array with values in the range [0, 255].
 
     """
+    if np.array(original_image).shape[2] == 4:
+        original_image = original_image.convert('RGB')
+
 
     # Read the original image and the color mask
 
@@ -199,10 +202,10 @@ def grey_to_rgb_mask(output, path = None):
     else: 
         color_dict = {
         0 : (255, 0, 0),      # Red
-        1 : (0, 255, 0),      # Green
+        1 : (0, 255, 0),      #  Green
         2 : (0, 0, 255),      # Blue
-        3: (255, 255, 0),    # Yellow
-        4: (0, 255, 255),    # Cyan
+        3: (255, 255, 0),    # cyan
+        4:(0, 255, 255) ,    #Yellow
         5: (255, 0, 255),    # Magenta
         6: (192, 192, 192),  # Silver
         7: (128, 0, 0),      # Maroon
@@ -222,7 +225,7 @@ def grey_to_rgb_mask(output, path = None):
         rgb_mask[2][output==index] = color[2]  # Blue channel
     rgb_mask = rgb_mask.transpose(1,2,0)
 
-    return rgb_mask
+    return rgb_mask, color_dict
 
 def visualize_comparison(pred, target):
     """

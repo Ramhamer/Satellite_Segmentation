@@ -4,4 +4,7 @@ results/
 Rachel_Tzuria/
 __pycache__/
 .vscode/
-
+wandb/
+models/
+results/
+origin_data/

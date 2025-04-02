@@ -1,10 +1,9 @@
 project :
   name: miniFrance
-  run_name: None
+  run_name: 2048_compress
 
 data:
-  dir: Rachel_Tzuria/Data/Dataset/Debug_dataset
-  dir: /Data/Data/Debug_dataset
+  dir: /Data/2048_compress
   name: MiniFrance
 loss:
   eps: 1.0e-06
@@ -31,12 +30,12 @@ test_evaluation:
   best_model_weight: None
 train: 
   back_epochs: 10
-  batch_size: 4
+  batch_size: 11
   check_convergence_epslion: 0.0001
   class_distribution: None
   desirable_class: 4
   lr: 0.001
-  num_epochs: 4
+  num_epochs: 100
   optimizer_name: AdamW
   weight_decay: 0.04
   interval_save_epoch : 10

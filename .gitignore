@@ -1,0 +1,9 @@
+assests/
+Data/
+results/
+Rachel_Tzuria/
+__pycache__/
+.vscode/
+wandb/
+gpus_segmentation.tar
+.hypothesis/

@@ -21,7 +21,7 @@ def rename_masks_to_match_images(output_mask_dir):
             os.rename(old_path, new_path)
             print(f"Renamed: {mask_filename} -> {new_name}")
 
-def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path, crop_size=1024, overlap_percent=10,resize =None):
+def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path, crop_size=1024, overlap_percent=10,resize =True):
     print(f"{Fore.RED}Starting to process the dataset..{Fore.RESET}")
     stride = int(crop_size * (1 - overlap_percent / 100))
     print(f"Using crop size: {crop_size}x{crop_size} with {overlap_percent}% overlap (stride: {stride}")
@@ -90,8 +90,8 @@ if __name__ == "__main__":
     for i in lst:
         image_dir = f"origin_data/{i}"
         mask_dir = f"origin_data/{i}_labels"
-        output_image_dir = '/origin_data/1024_crop/512_compress/train/images'
-        output_mask_dir = '/origin_data/1024_crop/512_compress/train/masks'
+        output_image_dir = 'origin_data/1024_crop/512_compress/images'
+        output_mask_dir = 'origin_data/1024_crop/512_compress/masks'
         missing_masks_file_path = "Rachel_Tzuria/Data/origin_data/for_test/D049/missing_masks.txt" # corelated to the image dir
         
         process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path,resize = True)

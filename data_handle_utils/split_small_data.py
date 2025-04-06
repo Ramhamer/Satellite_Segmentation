@@ -75,9 +75,9 @@ def create_small_dataset(full_dataset_dir, output_dir, percentage):
 
 # Example usage
 if __name__ == "__main__":
-    full_dataset_dir = 'Rachel_Tzuria/Data/Dataset/Small_test_dataset'
-    output_dir = 'Rachel_Tzuria/Data/Dataset/Debug_dataset'
-    percentage = 5  # Take 20% of the original data
+    full_dataset_dir = '/workspace/origin_data/1024_crop/verified'
+    output_dir = '/workspace/origin_data/1024_crop/03_04_25'
+    percentage = 10 
     
     create_small_dataset(full_dataset_dir, output_dir, percentage)
     print(f"Created smaller dataset with {percentage}% of the original data in {output_dir}")

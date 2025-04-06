@@ -102,12 +102,14 @@ if __name__ == "__main__":
     # MODIFY THE PATHS BELOW TO RUN DIRECTLY FROM VSCode
     # =====================================================================
     
+
+
     # Input directories
-    src_images_dir = "origin_data/2048_crop/D035/images"  # CHANGE THIS: path to your source images directory
-    src_masks_dir = "origin_data/2048_crop/D035/masks"    # CHANGE THIS: path to your source masks directory
+    src_images_dir = "/workspace/origin_data/1024_crop/verified/images"  # CHANGE THIS: path to your source images directory
+    src_masks_dir = '/workspace/origin_data/1024_crop/verified/masks'    # CHANGE THIS: path to your source masks directory
     
     # Output directory - subdirectories will be created automatically
-    output_dir = "origin_data/2048_crop/check"      # CHANGE THIS: path to your output directory
+    output_dir = '/workspace/origin_data/1024_crop/03_04_25'      # CHANGE THIS: path to your output directory
     
     # Other settings
     train_ratio = 0.85                  # Ratio of data for training (0.5 means 50% train, 50% val)

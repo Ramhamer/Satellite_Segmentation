@@ -180,10 +180,4 @@ if __name__ == "__main__":
     
         weight_path = 'models/DeepLabV3Plus_JaccardFocalLoss_bestX512.pth'
         inference(cfg,weight_path,image_path,device)
-        
-
-
-    # 49-2013-0455-6730-LA93-0M50-E080.jp2.tif
-    # 49-2013-0420-6735-LA93-0M50-E080.jp2.tif
-    # 49-2013-0415-6715-LA93-0M50-E080.jp2.tif
-    # 49-2013-0380-6695-LA93-0M50-E080.jp2.tif
+    

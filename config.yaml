@@ -4,7 +4,6 @@ project :
 
 data:
   dir: Rachel_Tzuria/Data/Dataset/Debug_dataset
-  dir: /Data/Data/Debug_dataset
   name: MiniFrance
 loss:
   eps: 1.0e-06

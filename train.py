@@ -16,16 +16,11 @@ torch.backends.cudnn.enabled = False
 os.environ['CUDA_LAUNCH_BLOCKING']="1"
 os.environ['TORCH_USE_CUDA_DSA'] = "1"  
 
-<<<<<<< HEAD
-import warnings
-warnings.filterwarnings("ignore", category=DeprecationWarning) 
-=======
 # Add two hours to the current time automatically
 new_time = datetime.datetime.now() + datetime.timedelta(hours=2)
 time = new_time.strftime("%m_%d-%H_%M")
 
 
->>>>>>> origin/dan_branch
 
 def train(cfg, device): #Pull all the vars from the config file
     #cfg
@@ -122,19 +117,10 @@ def train(cfg, device): #Pull all the vars from the config file
                 acc_train= 0 
                 batch_loss = 0.0
                 for batch_idx, batch in enumerate(train_loader):
-<<<<<<< HEAD
-                    if batch_idx == 20:
-                        break
-                    images, masks = batch
-=======
                     images, masks,_= batch
->>>>>>> origin/dan_branch
                     # to device
                     images, masks = images.to(device), masks.to(device)
-                    
-                    # Validity check             
-                    # compare(images,masks)
-                    
+              
                     # Forward pass
                     outputs = model(images)[0]
                     loss_masks = masks.squeeze(1).long()                    
@@ -174,13 +160,8 @@ def train(cfg, device): #Pull all the vars from the config file
             cm = np.zeros((desirable_class,desirable_class))
             with torch.no_grad():
 
-<<<<<<< HEAD
-                for batch_idx, batch in enumerate(tqdm(val_loader)):
-                    images, masks = batch
-=======
                 for batch_idx, batch in enumerate(val_loader):
                     images, masks , filenames = batch
->>>>>>> origin/dan_branch
                     images, masks = images.to(device), masks.to(device)
                     
                     # Forward pass
@@ -200,23 +181,16 @@ def train(cfg, device): #Pull all the vars from the config file
                     val_acc = acc_val/len(val_loader.dataset)
 
                     # Save images samples
-<<<<<<< HEAD
-                    # if batch_idx == random_batch_idx:
-                    if batch_idx == 1:
-                        save_image_samples(images,masks,outputs,epoch_dir)
 
                     cm += confusion_matrix(y_true,y_pred) 
                     # save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg)
-=======
                     if batch_idx == random_batch_idx:
                         # save_image_samples(images,masks,outputs,epoch_dir)
                         wandb_visualization_table(images,masks,outputs,epoch,filenames)
 
             # # Save confusion matrix
-            cm = save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class)
+            cm = save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg)
         
-
->>>>>>> origin/dan_branch
 
             val_losses.append(val_loss)
             val_accuracies.append(val_acc)

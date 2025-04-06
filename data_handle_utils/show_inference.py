@@ -3,7 +3,11 @@ import numpy as np
 import tifffile as tiff
 import matplotlib.pyplot as plt
 import os
+<<<<<<< HEAD
 
+=======
+import PIL.Image as Image
+>>>>>>> origin/dan_branch
 
 # Fix Fontconfig error (disable Matplotlib's font manager cache)
 os.environ["MPLCONFIGDIR"] = "/tmp"
@@ -20,6 +24,7 @@ def show_inference(masks_path, class_value, max_files=300):
     counter = 0
     
     for i, filename in enumerate(os.listdir(masks_path)):
+<<<<<<< HEAD
          # Limit processing to avoid long runtimes
         
         if filename.endswith(".tif"):
@@ -42,6 +47,23 @@ def show_inference(masks_path, class_value, max_files=300):
             #open image and mask
             image = cv2.imread(image_path)
             mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
+=======
+        if i >= max_files:
+            break  # Limit processing to avoid long runtimes
+        
+        mask_path = os.path.join(masks_path, filename)
+        image_path = mask_path.replace("/labels", "", 1).replace("_UA2012.tif", ".jp2.tif")
+
+        if not os.path.exists(image_path):
+            print(f"Skipping: Image file not found for {mask_path}")
+            continue
+        
+        print(f"Processing {filename}...")
+        
+        # Read image and mask
+        image = tiff.imread(image_path)
+        mask = tiff.imread(mask_path)
+>>>>>>> origin/dan_branch
 
         if class_value in np.unique(mask):
             counter += 1
@@ -76,6 +98,7 @@ def show_inference(masks_path, class_value, max_files=300):
             fig.canvas.mpl_connect("motion_notify_event", on_mouse_move)
             plt.show()
             
+<<<<<<< HEAD
             #write the image name on a txt file
             with open("Rachel_Tzuria/Data/Dataset/Full_Dataset/masks_with_class_test_0.txt", "a") as f:
                f.write(f"{mask_path}\n")
@@ -113,3 +136,54 @@ if __name__ == "__main__":
     show_inference(masks_path, class_value)
     txt_file_path = "Rachel_Tzuria/Data/Dataset/Full_Dataset/masks_with_class_test_0.txt"
     # delete_zero_class(masks_path, txt_file_path)
+=======
+    
+    print(f"Class {class_value} found in {counter} masks")
+
+
+def check_cls_zero(path):
+    """
+    Check how many images have class 0 in the mask
+    """
+    counter = 0
+    for i, filename in enumerate(os.listdir(path)):
+        mask_path = os.path.join(path, filename)
+        mask = Image.open(mask_path)
+        mask = np.array(mask)
+        if 0 in np.unique(mask):
+            counter += 1
+    print(f"Class 0 found in {counter} masks")
+
+def check_pairs(path):
+    """"
+    check which images dosent have a corresponding mask and write the path on a txt file
+    """
+    counter = 0
+    for i, filename in enumerate(os.listdir(path)):
+        mask_path = os.path.join(path,filename)
+        image_path = mask_path.replace("/images/","/masks/")
+        if os.path.exists(image_path):
+            if os.path.exists(mask_path):
+                # new_path = "origin_data/1024_crop/verified"
+                # #move the mask to the new directory
+                # new_mask_dir = os.path.join(new_path, "masks")
+                # new_image_dir = os.path.join(new_path, "images")
+                # os.rename(mask_path, os.path.join(new_mask_dir, filename))
+                # os.rename(image_path, os.path.join(new_image_dir, filename))
+                counter += 1
+            else:
+                print(f"Image file not found for {mask_path}")
+        else:
+            print(f"Mask file not found for {image_path}")
+            #delete the image
+            os.remove(mask_path)
+    print(f"found{counter} masks")
+
+
+if __name__ == "__main__":
+    masks_path = "/workspace/origin_data/1024_crop/D013/masks"  # Update path as needed
+    class_value = 0  # Class value to visualize
+    # show_inference(masks_path, class_value)
+    # check_cls_zero(masks_path)
+    check_pairs(masks_path)
+>>>>>>> origin/dan_branch

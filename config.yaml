@@ -3,7 +3,11 @@ project :
   run_name: None
 
 data:
+<<<<<<< HEAD
   dir: Rachel_Tzuria/Data/Dataset/Debug_dataset
+=======
+  dir: origin_data/1024_crop
+>>>>>>> origin/dan_branch
   name: MiniFrance
 loss:
   eps: 1.0e-06
@@ -12,7 +16,11 @@ loss:
   smoothing_factor: 0.1
   log_loss: true
   mode: multiclass
+<<<<<<< HEAD
   name: JaccardFocalLoss
+=======
+  name: JaccardFocal
+>>>>>>> origin/dan_branch
   smooth: 0.1
 model: 
   activation: softmax

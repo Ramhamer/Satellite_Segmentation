@@ -1,8 +1,11 @@
 import os
 import shutil
 import re
+<<<<<<< HEAD
 from PIL import Image
 import numpy as np
+=======
+>>>>>>> origin/dan_branch
 
 def process_txt_files(txt_files, destination_dir):
     """
@@ -52,6 +55,7 @@ def process_txt_files(txt_files, destination_dir):
                     except Exception as e:
                         print(f"Error processing {image_path}: {str(e)}")
 
+<<<<<<< HEAD
 
 def move_unknown(path):
    dirs = ['train', 'val', 'test']
@@ -91,3 +95,18 @@ if __name__ == "__main__":
     # process_txt_files(txt_files, destination_dir)
     path = 'Rachel_Tzuria/Data/Dataset/Full_Dataset'
     move_unknown(path)
+=======
+if __name__ == "__main__":
+    # List of txt files to process
+    txt_files = [
+        "Rachel_Tzuria/Data/Dataset/Full_Dataset/white_pixel_report_train.txt",
+        "Rachel_Tzuria/Data/Dataset/Full_Dataset/white_pixel_report_val.txt",
+        "Rachel_Tzuria/Data/Dataset/Full_Dataset/white_pixel_report_test.txt"
+    ]
+    
+    # Destination directory
+    destination_dir = "Rachel_Tzuria/Data/Dataset/Full_Dataset/white_pixel_images"
+    
+    # Process the files
+    process_txt_files(txt_files, destination_dir)
+>>>>>>> origin/dan_branch

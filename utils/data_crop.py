@@ -88,22 +88,11 @@ def crop_images_with_masks(image_dir, mask_dir, output_image_dir, output_mask_di
         
         print(f"Generated {crop_count} crops for {base_name}")
 
-# Example usage
+
+
+
 if __name__ == "__main__":
-    # Replace these with your actual directories
-    image_directory = "path/to/images"
-    mask_directory = "path/to/masks"
-    output_image_directory = "path/to/output/images"
-    output_mask_directory = "path/to/output/masks"
-    
-    # Set your desired overlap percentage
-    overlap = 30  # 30% overlap
-    
-    crop_images_with_masks(
-        image_directory, 
-        mask_directory,
-        output_image_directory,
-        output_mask_directory,
-        overlap_percent=overlap,
-        file_extension="*.png"  # Change if your images have a different extension
-    )
+    # Define directories
+    image_dir = "origin_data/1024_crop/train/images"
+    # Check for missing pairs
+    check_pairs(image_dir)

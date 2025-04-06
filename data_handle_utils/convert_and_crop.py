@@ -2,6 +2,10 @@ import os
 import tifffile as tiff
 import numpy as np
 from PIL import Image
+<<<<<<< HEAD
+=======
+import cv2
+>>>>>>> origin/dan_branch
 from tqdm import tqdm
 from colorama import Fore, Style, init
 
@@ -20,13 +24,22 @@ def rename_masks_to_match_images(output_mask_dir):
             os.rename(old_path, new_path)
             print(f"Renamed: {mask_filename} -> {new_name}")
 
+<<<<<<< HEAD
 def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path, crop_size=1024, overlap_percent=10):
+=======
+def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path, crop_size=1024, overlap_percent=10,resize =True):
+>>>>>>> origin/dan_branch
     print(f"{Fore.RED}Starting to process the dataset..{Fore.RESET}")
     stride = int(crop_size * (1 - overlap_percent / 100))
     print(f"Using crop size: {crop_size}x{crop_size} with {overlap_percent}% overlap (stride: {stride}")
     
+<<<<<<< HEAD
     os.makedirs(output_image_dir, exist_ok=True)
     os.makedirs(output_mask_dir, exist_ok=True)
+=======
+    # os.makedirs(output_image_dir, exist_ok=True)
+    # os.makedirs(output_mask_dir, exist_ok=True)
+>>>>>>> origin/dan_branch
     
     converted_images = 0
     total_crops = 0
@@ -60,6 +73,7 @@ def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, miss
             for x in range(0, img_width - crop_size + 1, stride):
                 image_crop = image[y:y+crop_size, x:x+crop_size]
                 mask_crop = mask[y:y+crop_size, x:x+crop_size]
+<<<<<<< HEAD
                 
                 if not np.any(mask_crop == 0):
 
@@ -72,10 +86,30 @@ def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, miss
                         
                         image_crops += 1
                         total_crops += 1
+=======
+
+                #check if the crop have unkonwn value in the mask 
+                if np.any(mask_crop == 0):
+                    continue  # Skip this crop if any pixel is unknow
+                         
+                if image_crop.shape[0] == crop_size and image_crop.shape[1] == crop_size:
+                    image_crop_filename = f"{base_name}_y{y}_x{x}.png"
+                    mask_crop_filename = f"{base_name}_y{y}_x{x}.png"
+
+                    if resize:
+                        image_crop = cv2.resize(image_crop,(crop_size//2,crop_size//2))
+                        mask_crop = cv2.resize(mask_crop,(crop_size//2,crop_size//2),interpolation = cv2.INTER_NEAREST)
+                    save_as_png(image_crop, os.path.join(output_image_dir, image_crop_filename))
+                    save_as_png(mask_crop, os.path.join(output_mask_dir, mask_crop_filename))
+                    
+                    image_crops += 1
+                    total_crops += 1
+>>>>>>> origin/dan_branch
         
         print(f"Generated {image_crops} crops for {filename}")
         converted_images += 1
     
+<<<<<<< HEAD
     if missing_masks:
         with open(missing_masks_file_path, "w") as f:
             for missing in missing_masks:
@@ -97,3 +131,20 @@ if __name__ == "__main__":
     process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path)
     rename_masks_to_match_images(output_mask_dir)
     print(f"{Fore.GREEN}Dataset rename complete.{Fore.RESET}")
+=======
+    
+
+
+if __name__ == "__main__":
+    lst = ["D035","D029","D013"]
+    for i in lst:
+        image_dir = f"origin_data/{i}"
+        mask_dir = f"origin_data/{i}_labels"
+        output_image_dir = 'origin_data/1024_crop/512_compress/images'
+        output_mask_dir = 'origin_data/1024_crop/512_compress/masks'
+        missing_masks_file_path = "Rachel_Tzuria/Data/origin_data/for_test/D049/missing_masks.txt" # corelated to the image dir
+        
+        process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path,resize = True)
+        rename_masks_to_match_images(output_mask_dir)
+        print(f"{Fore.GREEN}Dataset rename complete.{Fore.RESET}")
+>>>>>>> origin/dan_branch

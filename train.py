@@ -120,7 +120,17 @@ def train(cfg, device): #Pull all the vars from the config file
                     images, masks,_= batch
                     # to device
                     images, masks = images.to(device), masks.to(device)
+<<<<<<< HEAD
               
+=======
+                    
+                    if 0 in np.unique(masks.cpu().numpy()):
+                        print(f"{Fore.RED}Class 0 found in the mask{Fore.RESET}")
+                    
+                    # Validity check             
+                    # compare(images,masks)
+                    
+>>>>>>> origin/dan_branch
                     # Forward pass
                     outputs = model(images)[0]
                     loss_masks = masks.squeeze(1).long()                    

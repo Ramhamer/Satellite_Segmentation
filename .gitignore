@@ -4,6 +4,13 @@ results/
 Rachel_Tzuria/
 __pycache__/
 .vscode/
+<<<<<<< HEAD
 .hypothesis/
 wandb/
 
+=======
+wandb/
+models/
+results/
+origin_data/
+>>>>>>> origin/dan_branch

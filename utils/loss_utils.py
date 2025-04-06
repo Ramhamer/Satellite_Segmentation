@@ -4,6 +4,15 @@ import torch.nn.functional as F
 import segmentation_models_pytorch as smp
 
 class DiceCrossEntropyLoss(nn.Module):
+    """
+    Dice + Cross Entropy:
+    Dice Loss: Helps with class imbalance by focusing on the overlap between predicted and ground truth masks.
+    Cross Entropy Loss: Works well for multi-class segmentation, ensuring the network correctly classifies each pixel.
+
+    Dice compensates for class imbalance, making sure small objects aren’t ignored.
+    Cross Entropy stabilizes training, ensuring the model learns pixel-wise classifications correctly.
+    """    
+    
     def __init__(self, loss_mode="multiclass", weight=None, dice_weight=0.5, ce_weight=0.5, log_loss=False, from_logits=True, smooth=1e-6, ignore_index=255, eps=1e-7):
         """
         Combined Dice Loss + Cross Entropy Loss.
@@ -40,6 +49,15 @@ class DiceCrossEntropyLoss(nn.Module):
 
 
 class JaccardFocalLoss(nn.Module):
+    """
+   Jaccard + Focal:
+    Jaccard Loss (IoU Loss): Similar to Dice, it measures the overlap but penalizes false positives more aggressively.
+    Focal Loss: Focuses on hard-to-classify pixels, especially useful when some classes are rare.
+
+    Jaccard helps with spatial accuracy, ensuring segmented areas align with real objects.
+    Focal prevents the model from ignoring small/rare classes, boosting performance on minority regions.
+    """ 
+
     def __init__(self, loss_mode="multiclass", weight=None, jaccard_weight=0.5, focal_weight=0.5, ignore_index=255, eps=1e-7):
         """
         Combined Jaccard Loss (IoU) + Focal Loss.

@@ -1,6 +1,14 @@
 import os
 import shutil
 import re
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+from PIL import Image
+import numpy as np
+=======
+>>>>>>> origin/dan_branch
+>>>>>>> origin/main
 
 def process_txt_files(txt_files, destination_dir):
     """
@@ -50,6 +58,50 @@ def process_txt_files(txt_files, destination_dir):
                     except Exception as e:
                         print(f"Error processing {image_path}: {str(e)}")
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+def move_unknown(path):
+   dirs = ['train', 'val', 'test']
+   output_dir = os.path.join(path, 'no_unknown')
+   for dir in dirs:
+        images_output_dir = os.path.join(output_dir, dir, 'images')
+        masks_output_dir = os.path.join(output_dir, dir, 'masks')
+        masks_dir = os.path.join(path,dir ,'masks')
+   
+   for filename in os.listdir(masks_dir):
+       
+       #check if 0 is in the file
+        mask_path = os.path.join(masks_dir, filename)
+        mask = Image.open(mask_path)
+        mask = np.array(mask)
+        cls = 0
+        if cls not in np.unique(mask):
+            shutil.copy(os.path.join(masks_dir, filename), os.path.join(masks_output_dir, filename))
+            print(f"Moved {filename} to {masks_output_dir}")
+            image_path = os.path.join(path, dir, 'images', filename)
+            shutil.copy(image_path, os.path.join(images_output_dir, filename))
+            print(f"Moved {filename} to {images_output_dir}")
+        
+
+if __name__ == "__main__":
+    # # List of txt files to process
+    # txt_files = [
+    #     "Rachel_Tzuria/Data/Dataset/Full_Dataset/white_pixel_report_train.txt",
+    #     "Rachel_Tzuria/Data/Dataset/Full_Dataset/white_pixel_report_val.txt",
+    #     "Rachel_Tzuria/Data/Dataset/Full_Dataset/white_pixel_report_test.txt"
+    # ]
+    
+    # # Destination directory
+    # destination_dir = "Rachel_Tzuria/Data/Dataset/Full_Dataset/white_pixel_images"
+    
+    # # Process the files
+    # process_txt_files(txt_files, destination_dir)
+    path = 'Rachel_Tzuria/Data/Dataset/Full_Dataset'
+    move_unknown(path)
+=======
+>>>>>>> origin/main
 if __name__ == "__main__":
     # List of txt files to process
     txt_files = [
@@ -62,4 +114,9 @@ if __name__ == "__main__":
     destination_dir = "Rachel_Tzuria/Data/Dataset/Full_Dataset/white_pixel_images"
     
     # Process the files
+<<<<<<< HEAD
     process_txt_files(txt_files, destination_dir)
+=======
+    process_txt_files(txt_files, destination_dir)
+>>>>>>> origin/dan_branch
+>>>>>>> origin/main

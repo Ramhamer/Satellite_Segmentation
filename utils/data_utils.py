@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from utils.define_datasetclass import SegmentationDataset
 from utils.image_utils import rgb_to_grey
 
-def train_dir(model_name):
+def train_dir(model_name,criterion_name):
     """
     Description: Create a directory to save the training results for a given model.
 
@@ -19,7 +19,7 @@ def train_dir(model_name):
     Returns: None
     """
     date = datetime.now().strftime("%b-%d-%Y_%H:%M")
-    train_name = model_name + "_" + date
+    train_name = model_name + "_" + criterion_name + "_" + date
     save_dir = os.path.join('results',train_name)
     os.makedirs(save_dir, exist_ok=True)
     os.makedirs(os.path.join(save_dir,"checkpoints"), exist_ok=True)

@@ -35,7 +35,17 @@ def collect_images(txt_files, base_dir, output_dir):
 if __name__ == "__main__":
     txt_files = [  # List of relative paths to .txt files
         "Rachel_Tzuria/Data/RAW/for_train/D013/missing_masks.txt", 
+<<<<<<< HEAD
         "Rachel_Tzuria/Data/RAW/for_train/D035/missing_masks.txt"]  
+=======
+<<<<<<< HEAD
+        "Rachel_Tzuria/Data/RAW/for_train/D035/missing_masks.txt"
+    ]  
+    
+=======
+        "Rachel_Tzuria/Data/RAW/for_train/D035/missing_masks.txt"]  
+>>>>>>> origin/dan_branch
+>>>>>>> origin/main
     base_dir = '/home/oury/Documents/Segmentation_model/'
     output_dir = '/home/oury/Documents/Segmentation_model/Rachel_Tzuria/Data/RAW/Unlabled_Images/'
     

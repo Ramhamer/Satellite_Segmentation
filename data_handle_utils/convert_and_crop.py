@@ -2,7 +2,14 @@ import os
 import tifffile as tiff
 import numpy as np
 from PIL import Image
+<<<<<<< HEAD
 import cv2
+=======
+<<<<<<< HEAD
+=======
+import cv2
+>>>>>>> origin/dan_branch
+>>>>>>> origin/main
 from tqdm import tqdm
 from colorama import Fore, Style, init
 
@@ -21,13 +28,31 @@ def rename_masks_to_match_images(output_mask_dir):
             os.rename(old_path, new_path)
             print(f"Renamed: {mask_filename} -> {new_name}")
 
+<<<<<<< HEAD
 def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path, crop_size=1024, overlap_percent=10,resize =True):
+=======
+<<<<<<< HEAD
+def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path, crop_size=1024, overlap_percent=10):
+=======
+def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path, crop_size=1024, overlap_percent=10,resize =True):
+>>>>>>> origin/dan_branch
+>>>>>>> origin/main
     print(f"{Fore.RED}Starting to process the dataset..{Fore.RESET}")
     stride = int(crop_size * (1 - overlap_percent / 100))
     print(f"Using crop size: {crop_size}x{crop_size} with {overlap_percent}% overlap (stride: {stride}")
     
+<<<<<<< HEAD
     # os.makedirs(output_image_dir, exist_ok=True)
     # os.makedirs(output_mask_dir, exist_ok=True)
+=======
+<<<<<<< HEAD
+    os.makedirs(output_image_dir, exist_ok=True)
+    os.makedirs(output_mask_dir, exist_ok=True)
+=======
+    # os.makedirs(output_image_dir, exist_ok=True)
+    # os.makedirs(output_mask_dir, exist_ok=True)
+>>>>>>> origin/dan_branch
+>>>>>>> origin/main
     
     converted_images = 0
     total_crops = 0
@@ -61,6 +86,23 @@ def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, miss
             for x in range(0, img_width - crop_size + 1, stride):
                 image_crop = image[y:y+crop_size, x:x+crop_size]
                 mask_crop = mask[y:y+crop_size, x:x+crop_size]
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                
+                if not np.any(mask_crop == 0):
+
+                    if image_crop.shape[0] == crop_size and image_crop.shape[1] == crop_size:
+                        image_crop_filename = f"{base_name}_y{y}_x{x}.png"
+                        mask_crop_filename = f"{base_name}_UA2012_y{y}_x{x}.png"
+                        
+                        save_as_png(image_crop, os.path.join(output_image_dir, image_crop_filename))
+                        save_as_png(mask_crop, os.path.join(output_mask_dir, mask_crop_filename))
+                        
+                        image_crops += 1
+                        total_crops += 1
+=======
+>>>>>>> origin/main
 
                 #check if the crop have unkonwn value in the mask 
                 if np.any(mask_crop == 0):
@@ -78,10 +120,40 @@ def process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, miss
                     
                     image_crops += 1
                     total_crops += 1
+<<<<<<< HEAD
+=======
+>>>>>>> origin/dan_branch
+>>>>>>> origin/main
         
         print(f"Generated {image_crops} crops for {filename}")
         converted_images += 1
     
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    if missing_masks:
+        with open(missing_masks_file_path, "w") as f:
+            for missing in missing_masks:
+                f.write(missing + "\n")
+        print(f"Missing mask file paths saved to {missing_masks_file_path}")
+    
+    print(f"Total images processed: {converted_images}")
+    print(f"Total crops created: {total_crops}")
+    print(f"Total images without masks: {len(missing_masks)}")
+    print(f"{Fore.GREEN}Dataset processing complete.{Fore.RESET}")
+
+if __name__ == "__main__":
+    image_dir = "Rachel_Tzuria/Data/origin_data/for_test/D049"
+    mask_dir = "Rachel_Tzuria/Data/origin_data/labels/for_test/D049"
+    output_image_dir = "Rachel_Tzuria/Data/Dataset/1024/Full_Dataset/test/images"
+    output_mask_dir = "Rachel_Tzuria/Data/Dataset/1024/Full_Dataset/test/masks"
+    missing_masks_file_path = "Rachel_Tzuria/Data/origin_data/for_test/D049/missing_masks.txt" # corelated to the image dir
+    
+    process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path)
+    rename_masks_to_match_images(output_mask_dir)
+    print(f"{Fore.GREEN}Dataset rename complete.{Fore.RESET}")
+=======
+>>>>>>> origin/main
     
 
 
@@ -96,4 +168,9 @@ if __name__ == "__main__":
         
         process_dataset(image_dir, mask_dir, output_image_dir, output_mask_dir, missing_masks_file_path,resize = True)
         rename_masks_to_match_images(output_mask_dir)
+<<<<<<< HEAD
         print(f"{Fore.GREEN}Dataset rename complete.{Fore.RESET}")
+=======
+        print(f"{Fore.GREEN}Dataset rename complete.{Fore.RESET}")
+>>>>>>> origin/dan_branch
+>>>>>>> origin/main

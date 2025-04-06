@@ -37,7 +37,15 @@ def split_dataset(src_images_dir, src_masks_dir, output_dir, train_ratio=0.5):
         os.makedirs(directory, exist_ok=True)
     
     # Get all mask files
+<<<<<<< HEAD
     mask_files = [f for f in os.listdir(src_masks_dir)]
+=======
+<<<<<<< HEAD
+    mask_files = [f for f in os.listdir(src_masks_dir) if f.endswith(".tif")]
+=======
+    mask_files = [f for f in os.listdir(src_masks_dir)]
+>>>>>>> origin/dan_branch
+>>>>>>> origin/main
     
     # Shuffle the mask files to randomize the selection
     random.shuffle(mask_files)
@@ -102,6 +110,21 @@ if __name__ == "__main__":
     # MODIFY THE PATHS BELOW TO RUN DIRECTLY FROM VSCode
     # =====================================================================
     
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    # Input directories
+    src_images_dir = "Rachel_Tzuria/Data/OLD/New_dir_to_check/D049"  # CHANGE THIS: path to your source images directory
+    src_masks_dir = "Rachel_Tzuria/Data/OLD/New_dir_to_check/labels/D049"    # CHANGE THIS: path to your source masks directory
+    
+    # Output directory - subdirectories will be created automatically
+    output_dir = "Rachel_Tzuria/Data/OLD/for_validation/D049"      # CHANGE THIS: path to your output directory
+    
+    # Other settings
+    train_ratio = 0.5                   # Ratio of data for training (0.5 means 50% train, 50% val)
+    use_move = True                    # Set to True if you want to move files instead of copying
+=======
+>>>>>>> origin/main
 
 
     # Input directories
@@ -114,6 +137,10 @@ if __name__ == "__main__":
     # Other settings
     train_ratio = 0.85                  # Ratio of data for training (0.5 means 50% train, 50% val)
     use_move = False                    # Set to True if you want to move files instead of copying
+<<<<<<< HEAD
+=======
+>>>>>>> origin/dan_branch
+>>>>>>> origin/main
     random_seed = 42                    # Random seed for reproducibility
     
     # =====================================================================

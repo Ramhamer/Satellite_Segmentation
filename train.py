@@ -72,7 +72,7 @@ def train(cfg, device): #Pull all the vars from the config file
    
 
     # Create a directory for the train
-    save_dir = train_dir(model_name)
+    save_dir = train_dir(model_name,criterion_name)
     checkpoints_dir = os.path.join(save_dir,'checkpoints')
     os.makedirs(checkpoints_dir, exist_ok=True)
 
@@ -120,6 +120,12 @@ def train(cfg, device): #Pull all the vars from the config file
                     images, masks,_= batch
                     # to device
                     images, masks = images.to(device), masks.to(device)
+<<<<<<< HEAD
+              
+=======
+                    
+                    if 0 in np.unique(masks.cpu().numpy()):
+                        print(f"{Fore.RED}Class 0 found in the mask{Fore.RESET}")
                     
                     if 0 in np.unique(masks.cpu().numpy()):
                         print(f"{Fore.RED}Class 0 found in the mask{Fore.RESET}")
@@ -127,6 +133,7 @@ def train(cfg, device): #Pull all the vars from the config file
                     # Validity check             
                     # compare(images,masks)
                     
+>>>>>>> origin/dan_branch
                     # Forward pass
                     outputs = model(images)[0]
                     loss_masks = masks.squeeze(1).long()                    
@@ -161,6 +168,9 @@ def train(cfg, device): #Pull all the vars from the config file
 
 
             # Validation step
+            torch.cuda.empty_cache()
+
+            cm = np.zeros((desirable_class,desirable_class))
             with torch.no_grad():
 
                 for batch_idx, batch in enumerate(val_loader):
@@ -171,15 +181,11 @@ def train(cfg, device): #Pull all the vars from the config file
                     outputs = model(images)[0]
                     loss_masks = masks.squeeze(1).long()
 
-                    if batch_idx == 0:
-                        y_pred = torch.argmax(outputs,dim=1).cpu().numpy().flatten()
-                        y_true = masks.cpu().numpy().flatten()
                     
-                    else:    
-                        #accomlate the y_pred and y_true
-                        y_pred = np.hstack([y_pred,torch.argmax(outputs,dim=1).cpu().numpy().flatten()])
-                        y_true = np.hstack([y_true , masks.cpu().numpy().flatten()])
-        
+                    y_pred = torch.argmax(outputs,dim=1).cpu().numpy().flatten()
+                    y_true = masks.cpu().numpy().flatten()
+                
+                 
                     # Calculate accuracy and loss of the validation
                     loss = criterion(outputs, loss_masks)
                     loss_val += loss.item() * images.size(0)
@@ -188,14 +194,16 @@ def train(cfg, device): #Pull all the vars from the config file
                     val_acc = acc_val/len(val_loader.dataset)
 
                     # Save images samples
+
+                    cm += confusion_matrix(y_true,y_pred) 
+                    # save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg)
                     if batch_idx == random_batch_idx:
                         # save_image_samples(images,masks,outputs,epoch_dir)
                         wandb_visualization_table(images,masks,outputs,epoch,filenames)
 
             # # Save confusion matrix
-            cm = save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class)
+            cm = save_confusion_matrix(y_true,y_pred,epoch_dir,desirable_class,cfg)
         
-
 
             val_losses.append(val_loss)
             val_accuracies.append(val_acc)
@@ -217,7 +225,7 @@ def train(cfg, device): #Pull all the vars from the config file
             if val_acc > best_acc:
                 best_acc = val_acc
                 best_epoch = epoch
-                file_name = os.path.join(checkpoints_dir,f'{model_name}_best.pth')
+                file_name = os.path.join(checkpoints_dir,f'{model_name}_{criterion_name}_best.pth')
                 if os.path.exists(file_name):
                     os.remove(file_name)
                 torch.save(model.state_dict(),file_name)
@@ -226,7 +234,7 @@ def train(cfg, device): #Pull all the vars from the config file
             # Save the model
             if epoch % interval_save_epoch == 0:
                 # Save the model
-                torch.save(model.state_dict(),os.path.join(checkpoints_dir,f'{model_name}_epoch_{epoch}.pth'))
+                torch.save(model.state_dict(),os.path.join(checkpoints_dir,f'{model_name}__{criterion_name}_epoch_{epoch}.pth'))
     
             # if the training is converged , stop the training
             if check_convergence(train_losses,val_losses,back_epochs,epslion):
@@ -246,6 +254,4 @@ if __name__ == "__main__":
     yaml_file = '/workspace/config.yaml'
     cfg = load_yaml(yaml_file)
     train(cfg,device)
-
-
 

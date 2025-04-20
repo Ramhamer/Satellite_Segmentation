@@ -1,0 +1,47 @@
+project :
+  name: miniFrance
+  run_name: None
+
+data:
+  dir: Data/MiniFrance/Dataset/Debug_dataset
+  size: 512
+  name: MiniFrance
+loss:
+  eps: 1.0e-06
+  from_logits: true
+  ignore_index: 255
+  smoothing_factor: 0.1
+  log_loss: true
+  mode: multiclass
+  name: JaccardFocalLoss
+  smooth: 0.1
+model: 
+  activation: softmax
+  dropout: 0.5
+  encoder_name: resnet101
+  encoder_weights: imagenet
+  model_name: DeepLabV3Plus
+  pooling: max
+  prev_weights: None
+  # For prev weights - check if the desirable class is fitts
+test_evaluation:
+  dir: Rachel_Tzuria/Data/Dataset/Full_dataset/test
+  model_name: null
+  save_dir: null
+  best_model_weight: None
+train: 
+  back_epochs: 10
+  batch_size: 16
+  check_convergence_epslion: 0.0001
+  class_distribution: None
+  desirable_class: 4
+  lr: 0.001
+  num_epochs: 100
+  optimizer_name: AdamW
+  weight_decay: 0.04
+  interval_save_epoch : 10
+transformes:
+  types:
+    ColorJitter: True 
+    horizontal_flip: True 
+    vertical_flip: True 

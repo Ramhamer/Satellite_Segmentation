@@ -84,7 +84,7 @@ class SegmentationEvaluator:
 
         # Confusion Matrix
         conf_matrix = confusion_matrix(targets, predictions, labels=self.labels)
-       
+        metrics.append(conf_matrix)
         # Normalized Confusion Matrix (row-wise normalization)
         row_sums = conf_matrix.sum(axis=1, keepdims=True)
         # Avoid division by zero
@@ -177,7 +177,7 @@ def create_comparison_charts(results, cfg):
     benchmark_dir = os.path.join("benchmark", today)
     os.makedirs(benchmark_dir, exist_ok=True)
     
-    metrics_names = ["normalized_confusion_matrix",  "pixel_accuracy", "mean_iou", "iou_per_class"]
+    metrics_names = ["confusion_matrix",  "pixel_accuracy", "mean_iou", "iou_per_class"]
     
     #make chart from every metric
     for index , metric in enumerate(metrics_names):

@@ -139,8 +139,7 @@ def train(cfg): #Pull all the vars from the config file
         for epoch in range(num_epochs):
             loss_val = 0
             acc_val = 0    
-            with tqdm(total=num_iter, desc="batch Progress",ncols=100  , unit='iter',bar_format=bar_format1) as iter_bar:
-                
+            with tqdm(total=num_iter, desc="batch Progress",ncols=100, unit='iter',bar_format=bar_format1) as iter_bar:
                 # Training step
                 model.train()
                 acc_train= 0 

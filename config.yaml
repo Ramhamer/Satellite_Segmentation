@@ -3,7 +3,7 @@ project :
   run_name: None
 
 data:
-  dir: Data/MiniFrance/Dataset/Debug_dataset
+  dir: /workspace/origin_data/512/Debug_dataset
   size: 512
   name: MiniFrance
 loss:
@@ -25,13 +25,15 @@ model:
   prev_weights: None
   # For prev weights - check if the desirable class is fitts
 test_evaluation:
-  dir: Rachel_Tzuria/Data/Dataset/Full_dataset/test
+  dir: /workspace/origin_data/512/Debug_dataset
   model_name: null
   save_dir: null
+  desirable_class: 4
   best_model_weight: None
+  run_name: None
 train: 
   back_epochs: 10
-  batch_size: 16
+  batch_size: 4
   check_convergence_epslion: 0.0001
   class_distribution: None
   desirable_class: 4

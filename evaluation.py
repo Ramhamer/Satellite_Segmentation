@@ -4,19 +4,19 @@ import time
 import numpy as np
 import wandb
 import datetime
-from sklearn.metrics import jaccard_score, confusion_matrix, recall_score, precision_score
+from sklearn.metrics import jaccard_score, confusion_matrix
 from utils.train_utlis import load_model, model_predict, calculate_class_distribution
 from utils.data_utils import load_data
 from utils.cfg_utils import load_yaml
-from utils.wandb_utils import wandb_init
+from utils.wandb_utils import wandb_init, wandb_confusion_matrix
 import pandas as pd
 
 class SegmentationEvaluator:
     def __init__(self, cfg, device):
         self.cfg = cfg
         self.device = device
-        self.data_dir = cfg['data']['dir']
-        self.desirable_class = cfg['train']['desirable_class']
+        self.data_dir = cfg['test_evaluation']['dir']
+        self.desirable_class = cfg['test_evaluation']['desirable_class']
         self.labels = [i for i in range(self.desirable_class)]
 
         ## Add two hours to the current time automatically
@@ -188,6 +188,7 @@ def create_comparison_charts(results, cfg):
             model_name = os.path.basename(model_path)
             if metric == "normalized_confusion_matrix":
                 #implement it
+                wandb_confusion_matrix((results[model_path])[index],model_name=model_name)
 
                 # Skip confusion matrix as it's a 2D matrix
                 continue

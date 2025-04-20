@@ -1,7 +1,5 @@
-wandb/
-results/
-__pycache__/
-inference_images/
-Data/
 models/
-.hypothesis/
+benchmark/
+origin_data/
+results/
+wandb/

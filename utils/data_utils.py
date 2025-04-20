@@ -9,7 +9,27 @@ from torchvision import transforms as T
 from torch.utils.data import DataLoader, DistributedSampler
 from torch.utils.data import DataLoader
 from utils.define_datasetclass import SegmentationDataset
-from utils.image_utils import rgb_to_grey
+
+def rgb_to_grey(mask,label_dict):
+    """
+    Converts an RGB mask to a grayscale mask using a label dictionary.
+
+    Args:
+        mask (np.ndarray): The RGB mask to convert to a grayscale mask.
+        label_dict (dict): A dictionary mapping RGB colors to class labels.
+    
+    Returns:
+        np.ndarray: The grayscale mask as a NumPy array with shape (H, W).
+    """
+
+    # Create an empty grayscale mask
+    grey_mask = np.zeros((mask.shape[0], mask.shape[1]), dtype=np.uint8)
+    
+    # Convert the RGB mask to a grayscale mask
+    for index, color in enumerate(label_dict.values()):
+        grey_mask[np.all(mask == color,axis = -1)] = index
+        
+    return grey_mask
 
 def train_dir(model_name,criterion_name):
     """

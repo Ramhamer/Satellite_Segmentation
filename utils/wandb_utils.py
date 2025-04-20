@@ -145,7 +145,7 @@ def wandb_visualization_table(images,masks,predicition,epoch,filenames):
 
     return
 
-def wandb_confusion_matrix(cm,epoch,save_dir):
+def wandb_confusion_matrix(cm,epoch = None,save_dir = None,model_name = None):
     
     # noemalized by column (how accurate the prediction for each class are)
     normalized_cm = cm.astype('float') / cm.sum(axis=0, keepdims=True)
@@ -166,11 +166,14 @@ def wandb_confusion_matrix(cm,epoch,save_dir):
 
 
       # Save to file
-    
-    save_path = os.path.join(save_dir, 'confusion_matrix.png')
-    plt.savefig(save_path)
-    plt.close()
+    if save_dir:
+        save_path = os.path.join(save_dir, 'confusion_matrix.png')
+        plt.savefig(save_path)
+        plt.close()
 
-    # Log to wandb
-    wandb.log({"Confusion Matrix": wandb.Image(save_path),"epoch": epoch})
+        # Log to wandb
+        wandb.log({"Confusion Matrix": wandb.Image(save_path),"epoch": epoch})
+    if model_name:
+        wandb.log({f"{model_name}_Confusion Matrix": wandb.Image(plt)})
+        plt.close()
     return
